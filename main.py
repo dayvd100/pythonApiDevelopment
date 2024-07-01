@@ -19,6 +19,12 @@ my_posts = [
 ]
 
 
+def find_post(id):
+    for p in my_posts:
+        if p["id"] == id:
+            return p
+
+
 @app.get("/")
 async def root():
     return {"Message": "I am Rick"}
@@ -35,3 +41,10 @@ async def create_posts(post: Post):
     post_dict["id"] = randrange(0, 1000000)
     my_posts.append(post_dict)
     return {"data": post_dict}
+
+
+@app.get("/posts/{id}")
+def get_post(id):
+    post = find_post(int(id))
+    print(post)
+    return {"post_detail": post}
